@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在QQ空间，淘宝，京东，以及一些旅游类的app上经常可以看到时间轴的效果，这种时间轴的效果有多种实现方式，本文用RecyclerView和自定义View来实现这个效果。">
+<meta name="keywords">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RecyclerView&自定义View实现时光轴效果">
+<meta property="og:url" content="http://chenfuduo.cn/techrecord/RecyclerView-自定义View实现时光轴效果.html">
+<meta property="og:site_name" content="chenfuduo">
+<meta property="og:description" content="在QQ空间，淘宝，京东，以及一些旅游类的app上经常可以看到时间轴的效果，这种时间轴的效果有多种实现方式，本文用RecyclerView和自定义View来实现这个效果。">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/view2.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/device-2016-03-29-205457.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210955.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329211352.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210221.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210315.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210422.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/419549675216118389.jpg">
+<meta property="og:updated_time" content="2016-03-29T13:52:07.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RecyclerView&自定义View实现时光轴效果">
+<meta name="twitter:description" content="在QQ空间，淘宝，京东，以及一些旅游类的app上经常可以看到时间轴的效果，这种时间轴的效果有多种实现方式，本文用RecyclerView和自定义View来实现这个效果。">
+<meta name="twitter:image" content="http://7xljei.com1.z0.glb.clouddn.com/view2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenfuduo.cn/techrecord/RecyclerView-自定义View实现时光轴效果.html"/>
+
+
+
+
+
+  <title>
+  
+
+  
+    RecyclerView&自定义View实现时光轴效果 | chenfuduo
+  
+</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?63c029dba1e367df2c8ffa39a309056a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">chenfuduo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">纸上得来终觉浅,绝知此事要躬行。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestmessage" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-favorites">
+          <a href="/favorites" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            收藏
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            menu.search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+  <header class="post-header">
+
+	<h2 class="post-title" itemprop="name headline">RecyclerView&自定义View实现时光轴效果</h2>
+
+
+
+</header>
+
+    
+    
+      <p>在QQ空间，淘宝，京东，以及一些旅游类的app上经常可以看到时间轴的效果，这种时间轴的效果有多种实现方式，本文用RecyclerView和自定义View来实现这个效果。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/view2.png" alt="xuanzhiphoto"></p>
+<a id="more"></a>
+<p>实现的效果图如下：<br><img src="http://7xljei.com1.z0.glb.clouddn.com/device-2016-03-29-205457.png" alt="效果图"></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>从上面的效果图可以看出，这个就是一个RecyclerView，并且他的LayoutManager为LinearLayoutManager，LinearLayoutManager的方向是垂直的。但是我们注意到他的item不是都是一致的，大概有这几种情况：</p>
+<ul>
+<li>只有一个item</li>
+</ul>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210955.png" alt="效果图"></p>
+<ul>
+<li>第一个item</li>
+</ul>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329211352.png" alt="效果图"></p>
+<ul>
+<li>普通item</li>
+</ul>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210221.png" alt="效果图"></p>
+<ul>
+<li>最后一个item</li>
+</ul>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210315.png" alt="效果图"></p>
+<p>所以可以我们可以将item的viewType分为四类。以普通的为例，我们需要自定义的是item左侧的部分，包括开始的线条，中间的圆形，下面的线条三个部分。其他的控件都是系统现成的。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20160329210422.png" alt="效果图"></p>
+<h1 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"TimeLineView"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"beginLine"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"endLine"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"lineWidth"</span> <span class="attr">format</span>=<span class="string">"dimension"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"timeLineMarker"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"timeLineMarkerSize"</span> <span class="attr">format</span>=<span class="string">"dimension"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>beginLine:开始的线条</li>
+<li>endLine:下面的线条</li>
+<li>lineWidth:线条的宽度</li>
+<li>timeLineMarker:中间的圆形</li>
+<li>timeLineMarkerSize:中间的圆形的大小，这里默认他的宽高一致</li>
+</ul>
+</blockquote>
+<h1 id="item实体数据封装"><a href="#item实体数据封装" class="headerlink" title="item实体数据封装"></a>item实体数据封装</h1><p>由效果图，可以看出我们需要封装的是：</p>
+<blockquote>
+<ul>
+<li>timeLineIcon:事件对应的icon，比如生日对应的icon</li>
+<li>timeLineName:事件的名称，比如生日</li>
+<li>timeLineDate:事件的日期</li>
+<li>timeLineTime:事件的日期距离现在的时间</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> me.jarvischen.timeline.bean;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.graphics.drawable.Drawable;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by chenfuduo on 2016/3/27.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeLineItem</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Drawable timeLineIcon;</div><div class="line">    <span class="keyword">private</span> String timeLineName;</div><div class="line">    <span class="keyword">private</span> String timeLineDate;</div><div class="line">    <span class="keyword">private</span> String timeLineTime;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineItem</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineItem</span><span class="params">(String timeLineDate, Drawable timeLineIcon,</span></span></div><div class="line">                        String timeLineName, String timeLineTime) &#123;</div><div class="line">        <span class="keyword">this</span>.timeLineDate = timeLineDate;</div><div class="line">        <span class="keyword">this</span>.timeLineIcon = timeLineIcon;</div><div class="line">        <span class="keyword">this</span>.timeLineName = timeLineName;</div><div class="line">        <span class="keyword">this</span>.timeLineTime = timeLineTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTimeLineDate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> timeLineDate;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLineDate</span><span class="params">(String timeLineDate)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineDate = timeLineDate;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Drawable <span class="title">getTimeLineIcon</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> timeLineIcon;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLineIcon</span><span class="params">(Drawable timeLineIcon)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineIcon = timeLineIcon;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTimeLineName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> timeLineName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLineName</span><span class="params">(String timeLineName)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineName = timeLineName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTimeLineTime</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> timeLineTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLineTime</span><span class="params">(String timeLineTime)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineTime = timeLineTime;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="主布局和数据填充"><a href="#主布局和数据填充" class="headerlink" title="主布局和数据填充"></a>主布局和数据填充</h1><p>主布局就是一个RecyclerView，</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/timeLineRecyclerView"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:descendantFocusability</span>=<span class="string">"afterDescendants"</span></div><div class="line">        <span class="attr">android:fadeScrollbars</span>=<span class="string">"true"</span></div><div class="line">        <span class="attr">android:fadingEdge</span>=<span class="string">"none"</span></div><div class="line">        <span class="attr">android:overScrollMode</span>=<span class="string">"never"</span></div><div class="line">        <span class="attr">android:scrollbarSize</span>=<span class="string">"2dp"</span></div><div class="line">        <span class="attr">android:scrollbarThumbVertical</span>=<span class="string">"@color/cyan_500"</span></div><div class="line">        <span class="attr">android:scrollbars</span>=<span class="string">"vertical"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> me.jarvischen.timeline;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v7.widget.LinearLayoutManager;</div><div class="line"><span class="keyword">import</span> android.support.v7.widget.RecyclerView;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.adapter.TimeLineAdapter;</div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.bean.TimeLineItem;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        RecyclerView timeLineRecyclerView = (RecyclerView) findViewById(R.id.timeLineRecyclerView);</div><div class="line">        LinearLayoutManager linearLayoutManager = <span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>);</div><div class="line">        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);</div><div class="line">        timeLineRecyclerView.setLayoutManager(linearLayoutManager);</div><div class="line">        TimeLineAdapter adapter = <span class="keyword">new</span> TimeLineAdapter(initDatas());</div><div class="line">        timeLineRecyclerView.setAdapter(adapter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> List&lt;TimeLineItem&gt; <span class="title">initDatas</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;TimeLineItem&gt; timeLineItems = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年3月27日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_birthday_min),</div><div class="line">                <span class="string">"爸爸的生日"</span>,</div><div class="line">                <span class="string">"1天"</span>));</div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年3月28日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_birthday_min),</div><div class="line">                <span class="string">"弟弟的生日"</span>,</div><div class="line">                <span class="string">"2天"</span>));</div><div class="line"></div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年3月29日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_birthday_min),</div><div class="line">                <span class="string">"老婆的生日"</span>,</div><div class="line">                <span class="string">"3天"</span>));</div><div class="line"></div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年3月30日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_memorial_min),</div><div class="line">                <span class="string">"结婚纪念日"</span>,</div><div class="line">                <span class="string">"4天"</span>));</div><div class="line"></div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年3月31日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_future_min),</div><div class="line">                <span class="string">"去看美人鱼"</span>,</div><div class="line">                <span class="string">"5天"</span>));</div><div class="line"></div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年4月1日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_future_min),</div><div class="line">                <span class="string">"植物园赏花"</span>,</div><div class="line">                <span class="string">"6天"</span>));</div><div class="line"></div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年4月2日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_memorial_min),</div><div class="line">                <span class="string">"恋爱纪念日"</span>,</div><div class="line">                <span class="string">"7天"</span>));</div><div class="line"></div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年4月3日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_future_min),</div><div class="line">                <span class="string">"自定义View练习"</span>,</div><div class="line">                <span class="string">"8天"</span>));</div><div class="line"></div><div class="line">        timeLineItems.add(<span class="keyword">new</span> TimeLineItem(<span class="string">"2016年4月4日"</span>,</div><div class="line">                getResources().getDrawable(R.drawable.ic_icon_memorial_min),</div><div class="line">                <span class="string">"结婚十周年纪念日"</span>,</div><div class="line">                <span class="string">"9天"</span>));</div><div class="line">        <span class="keyword">return</span> timeLineItems;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>RecyclerView需要一个LayoutManager，然后设置设配器即可。</p>
+<h1 id="自定义TimeLineMarker"><a href="#自定义TimeLineMarker" class="headerlink" title="自定义TimeLineMarker"></a>自定义TimeLineMarker</h1><ul>
+<li><p>第一步，构造器找到定义的属性值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> lineWidth;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> timeLineMarkerSize;</div><div class="line"></div><div class="line"><span class="keyword">private</span> Drawable beginLine;</div><div class="line"></div><div class="line"><span class="keyword">private</span> Drawable endLine;</div><div class="line"></div><div class="line"><span class="keyword">private</span> Drawable timeLineMarker;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">TimeLineView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">TimeLineView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">TimeLineView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">    TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TimeLineView);</div><div class="line">    lineWidth = typedArray.getDimensionPixelSize(R.styleable.TimeLineView_lineWidth, <span class="number">15</span>);</div><div class="line">    timeLineMarkerSize = typedArray.getDimensionPixelSize(R.styleable.TimeLineView_timeLineMarkerSize, <span class="number">25</span>);</div><div class="line">    beginLine = typedArray.getDrawable(R.styleable.TimeLineView_beginLine);</div><div class="line">    endLine = typedArray.getDrawable(R.styleable.TimeLineView_endLine);</div><div class="line">    timeLineMarker = typedArray.getDrawable(R.styleable.TimeLineView_timeLineMarker);</div><div class="line">    typedArray.recycle();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>第二步，重写onMeasure方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">    <span class="keyword">int</span> w = timeLineMarkerSize + getPaddingLeft() + getPaddingRight();</div><div class="line">    <span class="keyword">int</span> h = timeLineMarkerSize + getPaddingTop() + getPaddingBottom();</div><div class="line">    <span class="keyword">int</span> widthSize = resolveSizeAndState(w, widthMeasureSpec, <span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> heightSize = resolveSizeAndState(h, heightMeasureSpec, <span class="number">0</span>);</div><div class="line">    setMeasuredDimension(widthSize, heightSize);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中<code>resolveSizeAndState</code>的源码为，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">resolveSizeAndState</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> measureSpec, <span class="keyword">int</span> childMeasuredState)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> result;</div><div class="line">        <span class="keyword">switch</span> (specMode) &#123;</div><div class="line">            <span class="keyword">case</span> MeasureSpec.AT_MOST:</div><div class="line">                <span class="keyword">if</span> (specSize &lt; size) &#123;</div><div class="line">                    result = specSize | MEASURED_STATE_TOO_SMALL;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    result = size;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MeasureSpec.EXACTLY:</div><div class="line">                result = specSize;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                result = size;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result | (childMeasuredState &amp; MEASURED_STATE_MASK);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>哈，好熟悉的感觉，有没有！<br>关于此，更多请参考<a href="https://opticalix.github.io/2015/10/25/custom-view-summary/" target="_blank" rel="external">这里</a>。</p>
+<ul>
+<li><p>第三步，绘制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (beginLine != <span class="keyword">null</span>) &#123;</div><div class="line">        beginLine.draw(canvas);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (endLine != <span class="keyword">null</span>) &#123;</div><div class="line">        endLine.draw(canvas);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (timeLineMarker != <span class="keyword">null</span>) &#123;</div><div class="line">        timeLineMarker.draw(canvas);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>第四步，重写onSizeChanged方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">       initDrawable();</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initDrawable</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">int</span> paddingLeft = getPaddingLeft();</div><div class="line">       <span class="keyword">int</span> paddingRight = getPaddingRight();</div><div class="line">       <span class="keyword">int</span> paddingBottom = getPaddingBottom();</div><div class="line">       <span class="keyword">int</span> paddingTop = getPaddingTop();</div><div class="line"></div><div class="line">       <span class="comment">//父容器的宽高</span></div><div class="line">       <span class="keyword">int</span> width = getWidth();</div><div class="line">       <span class="keyword">int</span> height = getHeight();</div><div class="line"></div><div class="line">       <span class="keyword">int</span> cWidth = width - paddingLeft - paddingRight;</div><div class="line">       <span class="keyword">int</span> cHeight = height - paddingTop - paddingBottom;</div><div class="line"></div><div class="line">       <span class="keyword">int</span> lastTimeLineMarkerSize = Math.min(timeLineMarkerSize, Math.min(cWidth, cHeight));</div><div class="line"></div><div class="line">       Rect bounds = <span class="keyword">null</span>;</div><div class="line">       <span class="keyword">if</span> (timeLineMarker != <span class="keyword">null</span>) &#123;</div><div class="line">           timeLineMarker.setBounds(paddingLeft, paddingTop,</div><div class="line">                   paddingLeft + lastTimeLineMarkerSize, paddingTop + lastTimeLineMarkerSize);</div><div class="line">           bounds = timeLineMarker.getBounds();</div><div class="line">       &#125;</div><div class="line">       <span class="comment">//注意运算符的优先级</span></div><div class="line">       <span class="keyword">int</span> lineLeft = bounds.centerX() - (lineWidth &gt;&gt; <span class="number">2</span>);</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (beginLine != <span class="keyword">null</span>) &#123;</div><div class="line">           beginLine.setBounds(lineLeft, <span class="number">0</span>, lineLeft + lineWidth, bounds.top);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (endLine != <span class="keyword">null</span>) &#123;</div><div class="line">           endLine.setBounds(lineLeft, bounds.bottom, lineLeft + lineWidth, height);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>逻辑很简单，不做过多的解释。initDrawableSize 方法进行具体的运算，而运算的时间点就是当控件的大小改变(onSizeChanged)的时候。</p>
+<p>在初始化中采用了一定的投机取巧；这里利用了上内边距与下内边距分别作为上线条与下线条的长度；而线条与中间的标识都采用了水平距中。</p>
+<p>整体的代码，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> me.jarvischen.timeline.view;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.content.res.TypedArray;</div><div class="line"><span class="keyword">import</span> android.graphics.Canvas;</div><div class="line"><span class="keyword">import</span> android.graphics.Rect;</div><div class="line"><span class="keyword">import</span> android.graphics.drawable.Drawable;</div><div class="line"><span class="keyword">import</span> android.util.AttributeSet;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"></div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.R;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by chenfuduo on 2016/3/27.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeLineView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> lineWidth;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> timeLineMarkerSize;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Drawable beginLine;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Drawable endLine;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Drawable timeLineMarker;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TimeLineView);</div><div class="line">        lineWidth = typedArray.getDimensionPixelSize(R.styleable.TimeLineView_lineWidth, <span class="number">15</span>);</div><div class="line">        timeLineMarkerSize = typedArray.getDimensionPixelSize(R.styleable.TimeLineView_timeLineMarkerSize, <span class="number">25</span>);</div><div class="line">        beginLine = typedArray.getDrawable(R.styleable.TimeLineView_beginLine);</div><div class="line">        endLine = typedArray.getDrawable(R.styleable.TimeLineView_endLine);</div><div class="line">        timeLineMarker = typedArray.getDrawable(R.styleable.TimeLineView_timeLineMarker);</div><div class="line">        typedArray.recycle();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (beginLine != <span class="keyword">null</span>) &#123;</div><div class="line">            beginLine.draw(canvas);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (endLine != <span class="keyword">null</span>) &#123;</div><div class="line">            endLine.draw(canvas);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (timeLineMarker != <span class="keyword">null</span>) &#123;</div><div class="line">            timeLineMarker.draw(canvas);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">        <span class="keyword">int</span> w = timeLineMarkerSize + getPaddingLeft() + getPaddingRight();</div><div class="line">        <span class="keyword">int</span> h = timeLineMarkerSize + getPaddingTop() + getPaddingBottom();</div><div class="line">        <span class="keyword">int</span> widthSize = resolveSizeAndState(w, widthMeasureSpec, <span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> heightSize = resolveSizeAndState(h, heightMeasureSpec, <span class="number">0</span>);</div><div class="line">        setMeasuredDimension(widthSize, heightSize);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">        initDrawable();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initDrawable</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> paddingLeft = getPaddingLeft();</div><div class="line">        <span class="keyword">int</span> paddingRight = getPaddingRight();</div><div class="line">        <span class="keyword">int</span> paddingBottom = getPaddingBottom();</div><div class="line">        <span class="keyword">int</span> paddingTop = getPaddingTop();</div><div class="line"></div><div class="line">        <span class="comment">//父容器的宽高</span></div><div class="line">        <span class="keyword">int</span> width = getWidth();</div><div class="line">        <span class="keyword">int</span> height = getHeight();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> cWidth = width - paddingLeft - paddingRight;</div><div class="line">        <span class="keyword">int</span> cHeight = height - paddingTop - paddingBottom;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> lastTimeLineMarkerSize = Math.min(timeLineMarkerSize, Math.min(cWidth, cHeight));</div><div class="line"></div><div class="line">        Rect bounds = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (timeLineMarker != <span class="keyword">null</span>) &#123;</div><div class="line">            timeLineMarker.setBounds(paddingLeft, paddingTop,</div><div class="line">                    paddingLeft + lastTimeLineMarkerSize, paddingTop + lastTimeLineMarkerSize);</div><div class="line">            bounds = timeLineMarker.getBounds();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//注意运算符的优先级</span></div><div class="line">        <span class="keyword">int</span> lineLeft = bounds.centerX() - (lineWidth &gt;&gt; <span class="number">2</span>);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (beginLine != <span class="keyword">null</span>) &#123;</div><div class="line">            beginLine.setBounds(lineLeft, <span class="number">0</span>, lineLeft + lineWidth, bounds.top);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (endLine != <span class="keyword">null</span>) &#123;</div><div class="line">            endLine.setBounds(lineLeft, bounds.bottom, lineLeft + lineWidth, height);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeginLine</span><span class="params">(Drawable beginLine)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.beginLine = beginLine;</div><div class="line">        initDrawable();</div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEndLine</span><span class="params">(Drawable endLine)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.endLine = endLine;</div><div class="line">        initDrawable();</div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLineWidth</span><span class="params">(<span class="keyword">int</span> lineWidth)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.lineWidth = lineWidth;</div><div class="line">        initDrawable();</div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLineMarker</span><span class="params">(Drawable timeLineMarker)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineMarker = timeLineMarker;</div><div class="line">        initDrawable();</div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLineMarkerSize</span><span class="params">(<span class="keyword">int</span> timeLineMarkerSize)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineMarkerSize = timeLineMarkerSize;</div><div class="line">        initDrawable();</div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="Adapter和ViewHolder"><a href="#Adapter和ViewHolder" class="headerlink" title="Adapter和ViewHolder"></a>Adapter和ViewHolder</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> me.jarvischen.timeline.adapter;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.support.v7.widget.RecyclerView;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.R;</div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.bean.TimeLineItem;</div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.bean.TimeLineItemType;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by chenfuduo on 2016/3/27.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeLineAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">TimeLineViewHolder</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;TimeLineItem&gt; timeLineItems;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineAdapter</span><span class="params">(List&lt;TimeLineItem&gt; timeLineItems)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.timeLineItems = timeLineItems;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> TimeLineViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">        View view = View.inflate(parent.getContext(), R.layout.item_timeline, <span class="keyword">null</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> TimeLineViewHolder(view, viewType,parent.getContext());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(TimeLineViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        holder.setData(timeLineItems.get(position));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> timeLineItems.size();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = timeLineItems.size() - <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span> (size == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> TimeLineItemType.ATOM;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (position == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> TimeLineItemType.START;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (position == size) &#123;</div><div class="line">            <span class="keyword">return</span> TimeLineItemType.END;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> TimeLineItemType.NORMAL;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要注意的是<code>getItemViewType</code>方法，在<code>TimeLineItemType</code>类中，封装了上述所述的四种情形。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> me.jarvischen.timeline.adapter;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.graphics.drawable.Drawable;</div><div class="line"><span class="keyword">import</span> android.support.v7.widget.RecyclerView;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.widget.ImageView;</div><div class="line"><span class="keyword">import</span> android.widget.TextView;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Random;</div><div class="line"></div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.R;</div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.bean.TimeLineItem;</div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.bean.TimeLineItemType;</div><div class="line"><span class="keyword">import</span> me.jarvischen.timeline.view.TimeLineView;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by chenfuduo on 2016/3/27.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeLineViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> TextView name;</div><div class="line">    <span class="keyword">private</span> ImageView icon;</div><div class="line">    <span class="keyword">private</span> TextView date;</div><div class="line">    <span class="keyword">private</span> TextView time;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimeLineViewHolder</span><span class="params">(View itemView, <span class="keyword">int</span> type,Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(itemView);</div><div class="line">        name = (TextView) itemView.findViewById(R.id.timeLineName);</div><div class="line">        date = (TextView) itemView.findViewById(R.id.timeLineDate);</div><div class="line">        time = (TextView) itemView.findViewById(R.id.timeLineTime);</div><div class="line">        icon = (ImageView) itemView.findViewById(R.id.timeLineIcon);</div><div class="line">        <span class="keyword">final</span> TimeLineView timeLineView = (TimeLineView) itemView.findViewById(R.id.timeLineView);</div><div class="line">        Drawable drawable = context.getResources().getDrawable(R.drawable.timeline_marker);</div><div class="line">        Drawable drawable2 = context.getResources().getDrawable(R.drawable.timeline_marker2);</div><div class="line">        Drawable drawable3 = context.getResources().getDrawable(R.drawable.timeline_marker3);</div><div class="line">        Drawable drawable4 = context.getResources().getDrawable(R.drawable.timeline_marker4);</div><div class="line">        Drawable drawable5 = context.getResources().getDrawable(R.drawable.timeline_marker5);</div><div class="line">        Drawable drawable6 = context.getResources().getDrawable(R.drawable.timeline_marker6);</div><div class="line">        Drawable drawable7 = context.getResources().getDrawable(R.drawable.timeline_marker7);</div><div class="line">        Random random = <span class="keyword">new</span> Random();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> i = random.nextInt(<span class="number">7</span>);</div><div class="line">        <span class="keyword">final</span> Drawable drawables[] = &#123;drawable,drawable2,drawable3,drawable4,drawable5,drawable6,drawable7&#125;;</div><div class="line">        timeLineView.setTimeLineMarker(drawables[i]);</div><div class="line">        <span class="keyword">if</span> (type == TimeLineItemType.ATOM) &#123;</div><div class="line">            timeLineView.setBeginLine(<span class="keyword">null</span>);</div><div class="line">            timeLineView.setEndLine(<span class="keyword">null</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == TimeLineItemType.START) &#123;</div><div class="line">            timeLineView.setBeginLine(<span class="keyword">null</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == TimeLineItemType.END) &#123;</div><div class="line">            timeLineView.setEndLine(<span class="keyword">null</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(TimeLineItem timeLineItem)</span> </span>&#123;</div><div class="line">        name.setText(timeLineItem.getTimeLineName());</div><div class="line">        icon.setImageDrawable(timeLineItem.getTimeLineIcon());</div><div class="line">        date.setText(timeLineItem.getTimeLineDate());</div><div class="line">        time.setText(timeLineItem.getTimeLineTime());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据Item类型的不同去设置数据。</p>
+<p>源码在<a href="https://github.com/leerduo/TimeLine" target="_blank" rel="external">这里</a></p>
+<p>加我微信和我一起学习。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/419549675216118389.jpg" alt="微信"></p>
+<p>参考文档：</p>
+<blockquote>
+<ul>
+<li><a href="http://developer.android.com/reference/android/graphics/drawable/Drawable.html" target="_blank" rel="external">Drawable</a> </li>
+<li><a href="http://developer.android.com/guide/topics/graphics/2d-graphics.html" target="_blank" rel="external">Canvas and Drawables</a></li>
+<li><a href="http://rey5137.com/blog/tutorial-custom-drawable-part3/" target="_blank" rel="external">Tutorial: Custom Drawable - Part 3</a></li>
+<li><a href="http://ryanharter.com/blog/2015/04/03/custom-drawables/" target="_blank" rel="external">Custom Drawables</a></li>
+<li><a href="http://ptrprograms.blogspot.sg/2015/01/implementing-and-using-custom-drawable.html" target="_blank" rel="external">Implementing and Using Custom Drawable States</a></li>
+</ul>
+</blockquote>
+
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="techrecord/RecyclerView-自定义View实现时光轴效果.html"
+           data-title="RecyclerView&自定义View实现时光轴效果" data-url="http://chenfuduo.cn/techrecord/RecyclerView-自定义View实现时光轴效果.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xljei.com1.z0.glb.clouddn.com/wow.png"
+               alt="chenfuduo" />
+          <p class="site-author-name" itemprop="name">chenfuduo</p>
+          <p class="site-description motion-element" itemprop="description">梦里花落知多少。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leerduo" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/duoduoustc" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.vogella.com/tutorials/android.html" title="Vogella" target="_blank">Vogella</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenfuduo</span>
+   <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenfuduo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("VSqPcBEsvXA3geFARgDcrESG-gzGzoHsz", "czrXTwyStUFW7FeG3mI4l7Kk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

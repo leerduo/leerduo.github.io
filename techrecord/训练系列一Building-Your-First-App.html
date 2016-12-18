@@ -1,0 +1,812 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本部分内容包括了Android开发环境的搭建和环境配置，创建Android工程和项目结构分析，以及一个错误分析。">
+<meta name="keywords">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Building Your First App">
+<meta property="og:url" content="http://chenfuduo.cn/techrecord/训练系列一Building-Your-First-App.html">
+<meta property="og:site_name" content="chenfuduo">
+<meta property="og:description" content="本部分内容包括了Android开发环境的搭建和环境配置，创建Android工程和项目结构分析，以及一个错误分析。">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_102514.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_103346.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_104228.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_104727.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_105039.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_101453.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_102514.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_101642.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_101724.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_110421.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_111108.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_125617.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_125912.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/viewgroup20160807.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/edittext_wrap.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/edittext_gravity.png">
+<meta property="og:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_180154.png">
+<meta property="og:updated_time" content="2016-08-07T10:02:51.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Building Your First App">
+<meta name="twitter:description" content="本部分内容包括了Android开发环境的搭建和环境配置，创建Android工程和项目结构分析，以及一个错误分析。">
+<meta name="twitter:image" content="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_102514.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenfuduo.cn/techrecord/训练系列一Building-Your-First-App.html"/>
+
+
+
+
+
+  <title>
+  
+
+  
+    Building Your First App | chenfuduo
+  
+</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?63c029dba1e367df2c8ffa39a309056a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">chenfuduo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">纸上得来终觉浅,绝知此事要躬行。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestmessage" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-favorites">
+          <a href="/favorites" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            收藏
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            menu.search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+  <header class="post-header">
+
+	<h2 class="post-title" itemprop="name headline">Building Your First App</h2>
+
+
+
+</header>
+
+    
+    
+      <p>本部分内容包括了Android开发环境的搭建和环境配置，创建Android工程和项目结构分析，以及一个错误分析。</p>
+<a id="more"></a>
+<h1 id="配置开发环境"><a href="#配置开发环境" class="headerlink" title="配置开发环境"></a>配置开发环境</h1><p>由于<code>eclipse adt bundle</code> google已经不再更新，而且Android Studio也有很稳定的版本了，截止到今天，最新的稳定版本是2.1.2，所以这里使用Android Studio的2.1.2版本。模拟器使用的是Genymotion，真机辅助。</p>
+<p>需要安装的软件是Java JDK和Android Studio，所需的软件从这里下载，<a href="http://www.androiddevtools.cn/" target="_blank" rel="external">AndroidDeveloperTools</a> ，安装后，JDK需要配置下环境变量，Android Studio也需要相应的修改下settings的内容，使他变得更为我们方便使用。</p>
+<h2 id="JDK的环境变量配置"><a href="#JDK的环境变量配置" class="headerlink" title="JDK的环境变量配置"></a>JDK的环境变量配置</h2><p>找到JDK的bin文件的安装目录，比如我的文件的安装位置在下面这里：</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_102514.png" alt="文件安装位置"></p>
+<p>找到后，复制路径，再依次打开<code>计算机-属性-高级系统设置-环境变量</code>，在打开的环境变量中，新建一个变量名<code>path</code>，如果之前有这个变量名，直接打开编辑即可，将<code>;E:\Program Files\Java\jdk1.8.0_101\bin</code>添加到变量值那一栏，当然这里的路径是我的路径，得根据情况设置为自己相应的路径；接着再新建一个变量名<code>classpath</code>，变量值是<code>.</code>。这样，JDK的环境变量就配置好了。cmd中输入<code>java -version</code>，验证是否配置完好。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_103346.png" alt="结果验证"></p>
+<h2 id="Android-Studio的配置"><a href="#Android-Studio的配置" class="headerlink" title="Android Studio的配置"></a>Android Studio的配置</h2><p>Android Studio配置主要设置下代码的文字大小，logcat几种不同类型log日志的显示颜色，以及设置行号显示。</p>
+<p>首先设置代码文字的大小，打开<code>File-settings</code>，在seettings中依次打开<code>Editor-Colors&amp;Fonts-Fonts</code>，做一下的修改，我将其大小修改为<code>14</code>，这个可以根据自己的需要去设置。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_104228.png" alt="设置代码大小"></p>
+<p>其次设置代码编辑区默认显示行号，如下，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_104727.png" alt="设置行号"></p>
+<p>接着设置Android Studio的日志显示颜色，它默认的颜色除了assert和error种类的日志是红色外，其他的日志颜色都一样，看起来不方便。具体设置方法参考下面，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_105039.png" alt="设置logcat颜色">。</p>
+<p>颜色码可以参考下面的<a href="http://developer.android.com/design/style/color.html" target="_blank" rel="external">链接</a> ，这个链接需翻墙。</p>
+<h1 id="创建Android项目"><a href="#创建Android项目" class="headerlink" title="创建Android项目"></a>创建Android项目</h1><p>开发环境配置好，打开AS(一下统一使用AS代替Android Studio)，<code>File-New-New Project</code>，如下，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_101453.png" alt="创建项目"></p>
+<p>依次填入的是应用名字，公司域名，这个公司域名是为了下面的包名考虑的，最后的项目的路径，点击next，选择程序可运行在最小的那个Android SDK版本，这里我用了他默认的，最低只支持Android 4.0.</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_102514.png" alt="创建项目"></p>
+<p>点击next，选择添加一个<code>Activity</code>的模板，这里选择<code>Empty Activity</code>，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_101642.png" alt="创建项目"></p>
+<p>点击next，填下Activity的名字和其对应的布局的名字，这里用默认的即可，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_101724.png" alt="创建项目"></p>
+<p>点击finish，到这里一个项目就创建完成了。</p>
+<h1 id="项目的结构"><a href="#项目的结构" class="headerlink" title="项目的结构"></a>项目的结构</h1><p>创建好项目后，点击如图的<code>倒三角</code>，可以看到项目的不同视图，选择<code>project</code>视图，如图所示，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_110421.png" alt="项目视图"></p>
+<p>其中的app是项目的一个module，就是一个模块，一个Android项目中可以包含很多模板，每一个模块都是一个独立的Android应用程序，AS使用gradle构建项目，其中项目视图和每一个module下都包含了<code>build.gradle</code>文件，而在res目录下，<code>mipmap</code>是存放程序图标icon的地方，<code>drawable</code>才是存放资源图片的地方。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_111108.png" alt="文件目录"></p>
+<p>这个时候，就可以运行程序了。我这里重新装的系统AS和genymotion都是新装的，在使用<code>adb start-server</code>的报了一个错误，错误log如下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">adb server version (32) doesn&apos;t match this client (36); killing...</div><div class="line">error: could not install *smartsocket* listener: cannot bind to 127.0.0.1:5037: 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。 (10048)                                        </div><div class="line">could not read ok from ADB Server</div><div class="line">* failed to start daemon *</div><div class="line">error: cannot connect to daemon</div></pre></td></tr></table></figure>
+<p>解决方案就是设置下genymotion的sdk地址为本地的sdk地址。如图，</p>
+<h1 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h1><p>点击运行按钮，运行程序，选择模拟器或者真机运行，如下，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_125617.png" alt="程序运行"></p>
+<p>运行的结果如下，这也是第一个程序<code>hello world</code>，后面的内容更精彩。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_125912.png" alt="运行结果"></p>
+<h1 id="创建简单的用户界面"><a href="#创建简单的用户界面" class="headerlink" title="创建简单的用户界面"></a>创建简单的用户界面</h1><p>Android的用户界面由View和ViewGroup对象构成，View对象比如一个按钮，文字等等，ViewGroup则规定View元素如何在Android中摆放，比如是网络摆放还是列表摆放等等。Android中的几大布局都是继承自ViewGroup。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/viewgroup20160807.png" alt="View&amp;ViewGroup"></p>
+<h2 id="创建线性布局"><a href="#创建线性布局" class="headerlink" title="创建线性布局"></a>创建线性布局</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>LinearLayout</code>是线性布局，继承自ViewGroup，它是容器，<code>android:orientation</code>这个属性指定了其内部元素的方向是水平还是垂直。</p>
+<h2 id="添加输入框"><a href="#添加输入框" class="headerlink" title="添加输入框"></a>添加输入框</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">EditText</span> <span class="attr">android:id</span>=<span class="string">"@+id/edit_message"</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:hint</span>=<span class="string">"@string/edit_message"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>输入框是<code>EditText</code>。EditText中添加的属性的解释：</p>
+<p><code>android:id</code>，这个属性为当前的View(EditText)提供了唯一的标识，那么在.java文件中可以引用这个View了。</p>
+<p><code>@</code>符号是引用资源必须的，<code>@</code>符号后跟资源类型(当前是id)，再跟着一个斜线，后面是资源文件名，当前是<code>edit_message</code>。</p>
+<p><code>@</code>符号后面的加号是这样的，当第一次定义这个资源的id的时候，需要加这个加号，后面比如引用这个id，则不需要，对于引用String和Layout具体资源，无论是不是第一次，都不需要加加号。当定义了这个id后，SDK tools会在编译的时候在<code>gen/R.java</code>下生成相应的唯一标识。</p>
+<p><code>android:layout_width</code>和<code>android:layout_height</code>分别指定宽度和高度，这里宽度和高度都是<code>wrap_content</code>包裹内容，</p>
+<p><code>android:hint</code>属性意思是输入框的提示内容，就是提示用户输入什么内容。</p>
+<h2 id="添加字符串资源"><a href="#添加字符串资源" class="headerlink" title="添加字符串资源"></a>添加字符串资源</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"app_name"</span>&gt;</span>My First App<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"edit_message"</span>&gt;</span>Enter a message<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"button_send"</span>&gt;</span>Send<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>将字符串资源单独放在<code>res/values/strings.xml</code>文件下，这样方便后期的项目维护。</p>
+<h2 id="添加按钮"><a href="#添加按钮" class="headerlink" title="添加按钮"></a>添加按钮</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">EditText</span> <span class="attr">android:id</span>=<span class="string">"@+id/edit_message"</span></span></div><div class="line">          <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">          <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">          <span class="attr">android:hint</span>=<span class="string">"@string/edit_message"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">          <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">          <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">          <span class="attr">android:text</span>=<span class="string">"@string/button_send"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/edittext_wrap.png" alt="添加按钮的样子"></p>
+<p>这样对于Button显示完好，但是对于输入框却不是，因为用户可能想输入比较长的内容，这时候，因为根布局是线性布局，就要用到<code>android:layout_weight</code>属性。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">EditText</span> <span class="attr">android:id</span>=<span class="string">"@+id/edit_message"</span></span></div><div class="line">    <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:hint</span>=<span class="string">"@string/edit_message"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>将宽度设置为0dp是因为从性能计算方面考虑的，因为你已经设置了<code>android:layout_weight=&quot;1&quot;</code>这个属性了，所以他的宽度已经决定了，如果再设置为包裹内容，他还会去计算宽度，影响性能。</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/edittext_gravity.png" alt="加上属性后的显示"></p>
+<p>最后运行程序，显示如下，</p>
+<p><img src="http://7xljei.com1.z0.glb.clouddn.com/2016-08-07_180154.png" alt="运行结果"></p>
+
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="techrecord/训练系列一Building-Your-First-App.html"
+           data-title="Building Your First App" data-url="http://chenfuduo.cn/techrecord/训练系列一Building-Your-First-App.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xljei.com1.z0.glb.clouddn.com/wow.png"
+               alt="chenfuduo" />
+          <p class="site-author-name" itemprop="name">chenfuduo</p>
+          <p class="site-description motion-element" itemprop="description">梦里花落知多少。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leerduo" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/duoduoustc" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.vogella.com/tutorials/android.html" title="Vogella" target="_blank">Vogella</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenfuduo</span>
+   <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenfuduo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("VSqPcBEsvXA3geFARgDcrESG-gzGzoHsz", "czrXTwyStUFW7FeG3mI4l7Kk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>
